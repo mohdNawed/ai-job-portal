@@ -1,0 +1,3 @@
+import { Link } from 'react-router-dom';
+import { useAuth } from '../context/AuthContext';
+export default function Navbar(){ const { user, logout } = useAuth(); return <nav className="flex items-center justify-between p-5 border-b border-slate-800 bg-slate-950 sticky top-0 z-10"><Link to="/" className="text-2xl font-bold">AI Job Portal</Link><div className="flex gap-4 items-center"><Link to="/jobs">Jobs</Link>{user ? <><Link to="/dashboard">Dashboard</Link><span className="text-slate-400">{user.name} ({user.role})</span><button onClick={logout} className="btn">Logout</button></> : <><Link to="/login">Login</Link><Link to="/register" className="btn">Register</Link></>}</div></nav> }

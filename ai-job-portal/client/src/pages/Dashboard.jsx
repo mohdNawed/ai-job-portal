@@ -1,0 +1,3 @@
+import { Link } from 'react-router-dom';
+import { useAuth } from '../context/AuthContext';
+export default function Dashboard(){ const {user}=useAuth(); return <main className="max-w-5xl mx-auto p-6"><h1 className="text-4xl font-bold mb-6">Dashboard</h1><div className="grid md:grid-cols-3 gap-5"><Link className="card" to="/profile">Profile</Link>{user.role==='user'&&<Link className="card" to="/applications">My Applications</Link>}{user.role==='recruiter'&&<><Link className="card" to="/recruiter/post-job">Post Job</Link><Link className="card" to="/recruiter/jobs">My Jobs</Link></>}{user.role==='admin'&&<><Link className="card" to="/admin/dashboard">Admin Dashboard</Link><Link className="card" to="/admin/jobs">Manage Jobs</Link></>}</div></main> }

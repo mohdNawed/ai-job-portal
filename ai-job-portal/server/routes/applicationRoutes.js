@@ -1,0 +1,11 @@
+import express from 'express';
+import { analyzeResume, applicantsByJob, applyJob, myApplications, updateApplicationStatus } from '../controllers/applicationController.js';
+import { protect, allowRoles } from '../middleware/auth.js';
+import { uploadResume } from '../middleware/upload.js';
+const router = express.Router();
+router.post('/apply', protect, allowRoles('user'), uploadResume.single('resume'), applyJob);
+router.get('/my', protect, allowRoles('user'), myApplications);
+router.get('/applicants/:jobId', protect, allowRoles('recruiter', 'admin'), applicantsByJob);
+router.patch('/:id/status', protect, allowRoles('recruiter', 'admin'), updateApplicationStatus);
+router.post('/resume/analyze', protect, uploadResume.single('resume'), analyzeResume);
+export default router;

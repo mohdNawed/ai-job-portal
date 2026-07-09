@@ -1,0 +1,10 @@
+import express from 'express';
+import { allJobs, dashboard, setJobStatus, users } from '../controllers/adminController.js';
+import { protect, allowRoles } from '../middleware/auth.js';
+const router = express.Router();
+router.use(protect, allowRoles('admin'));
+router.get('/dashboard', dashboard);
+router.get('/users', users);
+router.get('/jobs', allJobs);
+router.patch('/jobs/:id/status', setJobStatus);
+export default router;

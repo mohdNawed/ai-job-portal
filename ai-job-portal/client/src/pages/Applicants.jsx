@@ -1,0 +1,4 @@
+import { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
+import { api } from '../api/api';
+export default function Applicants(){ const {jobId}=useParams(); const [apps,setApps]=useState([]); useEffect(()=>{api.get(`/applications/applicants/${jobId}`).then(r=>setApps(r.data))},[jobId]); const status=async(id,s)=>{await api.patch(`/applications/${id}/status`,{status:s}); setApps(apps.map(a=>a._id===id?{...a,status:s}:a))}; return <main className="max-w-5xl mx-auto p-6"><h1 className="text-3xl font-bold mb-5">Applicants</h1>{apps.map(a=><div className="card mb-4" key={a._id}><h2 className="text-xl font-bold">{a.userId?.name}</h2><p>{a.userId?.email}</p><p>Match Score: {a.matchScore}% • Status: {a.status}</p><div className="flex gap-3 mt-3"><button className="btn" onClick={()=>status(a._id,'shortlisted')}>Shortlist</button><button className="btn" onClick={()=>status(a._id,'rejected')}>Reject</button></div></div>)}</main> }
